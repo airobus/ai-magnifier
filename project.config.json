@@ -1,7 +1,7 @@
 {
   "appid": "wx9d99d99708d9efb5",
   "compileType": "miniprogram",
-  "libVersion": "3.0.0",
+  "libVersion": "3.7.3",
   "packOptions": {
     "ignore": [],
     "include": []
@@ -18,14 +18,7 @@
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
-    },
-    "useCompilerPlugins": false,
-    "minifyWXSS": true,
-    "minifyWXML": true,
-    "useMultiFrameRuntime": true,
-    "useApiHook": true,
-    "useApiHostProcess": true,
-    "skylineRenderEnable": true
+    }
   },
   "condition": {},
   "editorSetting": {
