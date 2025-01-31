@@ -1,5 +1,10 @@
 <!--index.wxml-->
 
+<!-- 返回按钮 -->
+<view class="back-button" wx:if="{{imageUrl}}" bindtap="goBack">
+  <text class="back-icon">←</text>
+</view>
+
 <!-- 识别结果展示 -->
 <block wx:if="{{imageUrl}}">
   <view class="result-page">
@@ -40,16 +45,17 @@
   </scroll-view>
 </block>
 
-<!-- 底部按钮 -->
+<!-- 底部按钮 - 始终显示 -->
 <view class="action-section">
-  <view class="button-group">
-    <button class="action-button" bindtap="chooseImage" data-source="camera">
-      <text class="button-icon">📸</text>
-      <text>拍照识别</text>
-    </button>
-    <button class="action-button" bindtap="chooseImage" data-source="album">
-      <text class="button-icon">🖼️</text>
-      <text>相册选择</text>
-    </button>
+  <view class="button-container">
+    <view class="mega-button" bindtap="takePhoto">
+      <view class="button-inner">
+        <view class="icon-wrapper">
+          <text class="button-icon">📸</text>
+        </view>
+        <text class="button-text">{{imageUrl ? '重新拍照' : '拍照识别'}}</text>
+      </view>
+      <view class="button-glow"></view>
+    </view>
   </view>
 </view>

@@ -236,59 +236,88 @@ page {
 /* 按钮模块 */
 .action-section {
   position: fixed;
-  bottom: 40rpx;
+  bottom: 60rpx;
   left: 0;
   right: 0;
-  padding: 20rpx 0;
+  padding: 0 40rpx;
   padding-bottom: env(safe-area-inset-bottom);
+  z-index: 1000;
 }
 
-.button-group {
-  display: flex;
-  gap: 24rpx;
-  justify-content: center;
-  padding: 0 60rpx;
+.button-container {
+  position: relative;
+  height: 120rpx; /* 与按钮高度一致 */
+  width: 100%;
 }
 
-.action-button {
-  flex: 1;
-  height: 96rpx;
-  border-radius: 48rpx;
+.mega-button {
+  position: absolute;
+  width: 100%;
+  height: 120rpx; /* 减小高度 */
+  border-radius: 60rpx;
+  background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16rpx;
-  font-size: 32rpx;
-  background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
-  color: var(--text-color);
-  border: none;
-  box-shadow: 0 8rpx 24rpx rgba(59, 130, 246, 0.3),
-              0 2rpx 4rpx rgba(0, 0, 0, 0.4),
-              inset 0 2rpx 4rpx rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
-  position: relative;
+  box-shadow: 0 8rpx 32rpx rgba(59, 130, 246, 0.3);
   overflow: hidden;
 }
 
-.action-button::after {
-  display: none;
+.button-inner {
+  display: flex;
+  flex-direction: row; /* 改为水平排列 */
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  z-index: 2;
+  gap: 20rpx; /* 添加间距 */
 }
 
-.action-button:active {
-  transform: translateY(2rpx);
-  box-shadow: 0 4rpx 12rpx rgba(59, 130, 246, 0.2);
+.icon-wrapper {
+  width: 80rpx; /* 减小图标容器尺寸 */
+  height: 80rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0; /* 移除底部间距 */
 }
 
-/* 第二个按钮使用不同的渐变 */
-.action-button:last-child {
-  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-  border: 2rpx solid rgba(255, 255, 255, 0.1);
-}
-
-/* 添加图标样式 */
 .button-icon {
-  font-size: 40rpx;
-  margin-right: 8rpx;
+  font-size: 48rpx; /* 稍微减小图标大小 */
+}
+
+.button-text {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 0; /* 移除底部间距 */
+}
+
+.button-hint {
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+.button-glow {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+  animation: rotate 8s linear infinite;
+  z-index: 1;
+}
+
+/* 按钮动画 */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.mega-button.active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 16rpx rgba(59, 130, 246, 0.2);
 }
 
 /* 动画 */
@@ -644,4 +673,25 @@ page {
 /* 修改嘴巴样式和位置 */
 .mouth {
   display: none;
+}
+
+/* 添加返回按钮样式 */
+.back-button {
+  position: fixed;
+  top: env(safe-area-inset-top);
+  left: 30rpx;
+  width: 80rpx;
+  height: 80rpx;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.back-icon {
+  color: white;
+  font-size: 48rpx;
+  font-weight: bold;
 }

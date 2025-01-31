@@ -1,6 +1,7 @@
 // index.js
 import AIServiceFactory from '../../utils/ai-service/index'
 import config from '../../config/index'
+import ImageHandler from '../../utils/image-handler'
 
 Page({
   data: {
@@ -15,7 +16,10 @@ Page({
       basicInfo: '',
       usage: '',
       notices: ''
-    }
+    },
+    activeButton: 'camera', // 默认显示拍照按钮
+    touchStartX: 0,
+    touchStartY: 0
   },
 
   onLoad() {
@@ -34,19 +38,39 @@ Page({
     )
   },
 
-  // 拍照或选择图片
-  chooseImage(e) {
-    const source = e.currentTarget.dataset.source;
+  // 拍照方法
+  takePhoto() {
     wx.chooseMedia({
       count: 1,
       mediaType: ['image'],
-      sourceType: [source], // 根据按钮传入的source决定来源
+      sourceType: ['camera'], // 只使用相机
+      camera: 'back',
       success: (res) => {
+        console.log('拍照成功：', res.tempFiles[0].tempFilePath)
         this.setData({
           imageUrl: res.tempFiles[0].tempFilePath,
           isAnalyzing: true
         })
         this.analyzeImage(res.tempFiles[0].tempFilePath)
+      },
+      fail: (err) => {
+        console.error('拍照失败：', err)
+        if (err.errMsg.includes('auth deny')) {
+          wx.showModal({
+            title: '提示',
+            content: '需要您授权使用相机，是否去设置？',
+            success: (res) => {
+              if (res.confirm) {
+                wx.openSetting()
+              }
+            }
+          })
+        } else {
+          wx.showToast({
+            title: '拍照失败',
+            icon: 'none'
+          })
+        }
       }
     })
   },
@@ -229,5 +253,47 @@ Page({
         this.setData({ isAnalyzing: false })
       }
     }, speed)
+  },
+
+  // 触摸开始
+  touchStart(e) {
+    this.setData({
+      touchStartX: e.touches[0].clientX,
+      touchStartY: e.touches[0].clientY
+    })
+  },
+
+  // 处理滑动
+  handleSwipe(e) {
+    const touchEndX = e.touches[0].clientX
+    const touchEndY = e.touches[0].clientY
+    const deltaX = touchEndX - this.data.touchStartX
+    const deltaY = touchEndY - this.data.touchStartY
+    
+    // 增加滑动阈值，降低灵敏度
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 100) { // 从50改为100
+      // 水平滑动切换按钮
+      this.setData({
+        activeButton: this.data.activeButton === 'camera' ? 'album' : 'camera'
+      })
+      // 添加触感反馈
+      wx.vibrateShort({
+        type: 'medium' // 使用中等强度的震动
+      })
+    }
+  },
+
+  // 触摸结束
+  touchEnd() {
+    // 可以添加一些结束动画
+  },
+
+  // 在 Page 中添加返回方法
+  goBack() {
+    this.setData({
+      imageUrl: '',
+      streamResponse: '',
+      isAnalyzing: false
+    })
   }
 })
