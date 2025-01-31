@@ -1,0 +1,55 @@
+<!--index.wxml-->
+<view class="custom-nav">
+  <view class="nav-title">智慧阅读助手</view>
+</view>
+
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+    <!-- 眼睛动画 -->
+    <block wx:if="{{!imageUrl}}">
+      <view class="eyes-container">
+        <view class="eye">
+          <view class="pupil"></view>
+        </view>
+        <view class="eye">
+          <view class="pupil"></view>
+        </view>
+      </view>
+      <view class="mouth"></view>
+    </block>
+    
+    <!-- 识别结果展示 -->
+    <block wx:else>
+      <view class="result-page">
+        <!-- 图片预览 -->
+        <image class="preview-image" src="{{imageUrl}}" mode="aspectFit"></image>
+        
+        <!-- AI回答区域 -->
+        <view class="answer-panel">
+          <view class="message-bubble">
+            <text user-select>{{streamResponse}}</text>
+            <view class="typing-indicator" wx:if="{{isAnalyzing}}">
+              <view class="dot"></view>
+              <view class="dot"></view>
+              <view class="dot"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 底部按钮 -->
+    <view class="action-section">
+      <view class="button-group">
+        <button class="action-button" bindtap="chooseImage" data-source="camera">
+          <text class="iconfont icon-camera"></text>
+          <text>拍照识别</text>
+        </button>
+        <button class="action-button" bindtap="chooseImage" data-source="album">
+          <text class="iconfont icon-photo"></text>
+          <text>相册选择</text>
+        </button>
+      </view>
+    </view>
+  </view>
+</scroll-view>

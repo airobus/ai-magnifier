@@ -1,0 +1,6 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "智慧阅读助手",
+  "navigationStyle": "custom",
+  "renderer": "skyline"
+}
