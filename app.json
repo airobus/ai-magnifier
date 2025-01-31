@@ -5,7 +5,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "智慧阅读助手",
+    "navigationBarTitleText": "",
     "navigationBarTextStyle": "black"
   },
   "style": "v2",

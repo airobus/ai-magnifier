@@ -1,10 +1,10 @@
 // app.js
+import ConfigManager from './utils/config-manager'
+
 App({
-  onLaunch() {
-    // 初始化
-    if (wx.canIUse('getSystemInfoSync.return.windowWidth')) {
-      this.globalData.systemInfo = wx.getSystemInfoSync()
-    }
+  async onLaunch() {
+    // 初始化配置
+    await ConfigManager.initConfig()
   },
   globalData: {
     systemInfo: null

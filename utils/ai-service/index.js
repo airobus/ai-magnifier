@@ -1,3 +1,5 @@
+import ConfigManager from '../config-manager'
+
 // AI服务提供商的基础类
 class BaseAIProvider {
   analyzeImage(imageData) {
@@ -16,42 +18,24 @@ class CloudflareAI extends BaseAIProvider {
     this.accountId = config.accountId
     this.apiToken = config.apiToken
     this.baseUrl = `https://api.cloudflare.com/client/v4/accounts/${this.accountId}/ai/run`
+    this.prompts = config.prompts
   }
 
   analyzeImage(imageData) {
     return new Promise((resolve, reject) => {
       console.log('准备发送请求到Cloudflare AI...')
       
-      // 将base64转换为Uint8Array
       const binaryString = wx.base64ToArrayBuffer(imageData)
       const uint8Array = new Uint8Array(binaryString)
       
       const requestData = {
-        prompt: `请分析这张图片中的文字内容，并按以下格式输出：
-
-1. 产品基本信息
-   - 产品名称：
-   - 主要用途：
-
-2. 使用方法
-   - 步骤1：
-   - 步骤2：
-   （如有更多步骤继续列出）
-
-3. 注意事项
-   - 重要提示1：
-   - 重要提示2：
-   （如有更多提示继续列出）
-
-请用简单易懂的语言描述，适合老年人阅读。`,
+        prompt: this.prompts.imageAnalysis,
         image: Array.from(uint8Array),
         max_tokens: 1000,
         temperature: 0.7,
         top_p: 1,
         stream: false
       }
-
-      console.log('请求URL:', `${this.baseUrl}/@cf/meta/llama-3.2-11b-vision-instruct`)
 
       wx.request({
         url: `${this.baseUrl}/@cf/meta/llama-3.2-11b-vision-instruct`,

@@ -24,10 +24,13 @@ Page({
       env: 'your-env-id' // 替换为您的云环境ID
     })
 
-    // 初始化AI服务
+    // 初始化AI服务，传入prompts配置
     this.aiService = AIServiceFactory.getProvider(
       config.ai.provider,
-      config.ai[config.ai.provider]
+      {
+        ...config.ai[config.ai.provider],
+        prompts: config.ai.prompts
+      }
     )
   },
 

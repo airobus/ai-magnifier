@@ -1,13 +1,10 @@
 export default {
   ai: {
-    // 当前使用的AI服务提供商
     provider: 'cloudflare',
-    // Cloudflare配置
     cloudflare: {
-      accountId: '8483c3ec7a0cbc54a8d660b5b9002b04',
-      apiToken: 'oa5hvFw9FypFYxIIaP7Z1Z7aE8NipHBeNmb7Zw3u'
+      accountId: 'YOUR_ACCOUNT_ID',
+      apiToken: 'YOUR_API_TOKEN'
     },
-    // AI提示语配置
     prompts: {
       imageAnalysis: `请分析这张图片中的文字内容，并按以下格式输出：
 
@@ -27,9 +24,5 @@ export default {
 
 请用简单易懂的语言描述，适合老年人阅读。`
     }
-    // 可以添加其他AI服务商的配置
-    // openai: {
-    //   apiKey: 'your-openai-api-key'
-    // }
   }
 } 
