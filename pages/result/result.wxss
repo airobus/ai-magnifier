@@ -73,7 +73,6 @@
   flex-direction: column;
   align-items: center;
   margin: 20rpx 0;
-  width: 100%;
 }
 
 .battery-outline {
@@ -83,23 +82,91 @@
   border: 4rpx solid #B87333;
   border-radius: 20rpx;
   position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(10rpx);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .battery-level {
   position: absolute;
   left: 0;
   top: 0;
-  bottom: 0;
+  height: 100%;
   width: 0;
   background: linear-gradient(90deg, #FFB700, #FFD700);
-  border-radius: 20rpx;
-  animation: progress 3s ease-in-out forwards;
+  transition: width 0.3s ease-in-out;
+  z-index: 1;
+}
+
+.analyzing-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #333333;
+  font-size: 28rpx;
+  font-weight: bold;
   z-index: 2;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+}
+
+@keyframes progress {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+.analysis-status {
+  margin-top: 10rpx;
+  color: #666;
+  font-size: 28rpx;
+}
+
+.analysis-complete {
+  text-align: center;
+  margin: 20rpx 0;
+}
+
+.complete-text {
+  color: #4CAF50;
+  font-size: 28rpx;
+}
+
+.battery-outline {
+  width: 100%;
+  height: 80rpx;
+  background: #E6D5C3;
+  border: 4rpx solid #B87333;
+  border-radius: 20rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.battery-level {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #FFB700, #FFD700);
+  transition: width 0.3s ease-in-out;
+  z-index: 1;
+}
+
+.analyzing-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #333333;
+  font-size: 28rpx;
+  font-weight: bold;
+  z-index: 2;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
 }
 
 

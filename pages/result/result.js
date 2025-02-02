@@ -7,6 +7,8 @@ Page({
     imageUrl: '',
     messageBubbles: [],
     isAnalyzing: false,
+    analyzingText: '识别中...',
+    batteryLevelWidth: '0%',
     resultSections: {
       basicInfo: '',
       usage: '',
@@ -35,8 +37,25 @@ Page({
   analyzeImage(imagePath) {
     this.setData({ 
       isAnalyzing: true,
-      streamResponse: ''  // 清空之前的响应
+      streamResponse: '',  // 清空之前的响应
+      analyzingText: '识别中...'  // 添加分析状态文本
     })
+    
+    // 设置进度条初始样式
+    this.setData({
+      batteryLevelWidth: '0%'
+    })
+
+    // 启动进度条动画
+    let progress = 0
+    const progressTimer = setInterval(() => {
+      if (progress < 90) { // 最多到90%，留出空间给最终完成
+        progress += 1
+        this.setData({
+          batteryLevelWidth: progress + '%'
+        })
+      }
+    }, 100) // 每100ms更新一次
     
     this.imageToBase64(imagePath)
       .then(imageData => {
@@ -44,13 +63,22 @@ Page({
       })
       .then(result => {
         if (result.success && result.response) {
+          // 清除进度条定时器
+          clearInterval(progressTimer)
+          // 更新状态为识别完成，并设置进度条为 100%
+          this.setData({
+            analyzingText: '识别完成',
+            batteryLevelWidth: '100%'
+          })
           // 直接使用流式输出展示结果
           this.simulateStreamOutput(result.response)
         } else {
+          clearInterval(progressTimer) // 确保清除定时器
           throw new Error(result.error || '识别失败')
         }
       })
       .catch(error => {
+        clearInterval(progressTimer) // 确保清除定时器
         console.error('识别失败:', error)
         wx.showToast({
           title: '识别失败，请重试',
@@ -58,7 +86,8 @@ Page({
         })
         this.setData({ 
           isAnalyzing: false,
-          streamResponse: '识别失败，请重试'
+          streamResponse: '识别失败，请重试',
+          batteryLevelWidth: '0%' // 重置进度条
         })
       })
   },
@@ -106,63 +135,6 @@ Page({
         // 移除设置isAnalyzing为false的代码，保持进度条和结果显示
       }
     }, speed)
-  },
-
-  // 解析AI返回的结果
-  parseResult(text) {
-    console.log('原始返回文本:', text)
-    
-    const sections = {
-      usage: '',
-      notices: ''
-    }
-
-    try {
-      const lines = text.split('\n')
-      let currentSection = null
-      let sectionContent = []
-
-      for (const line of lines) {
-        const trimmedLine = line.trim()
-        
-        if (!trimmedLine) continue
-
-        if (trimmedLine.includes('2. 使用方法')) {
-          currentSection = 'usage'
-          continue
-        } else if (trimmedLine.includes('3. 注意事项')) {
-          if (currentSection === 'usage') {
-            sections.usage = sectionContent.join('\n')
-          }
-          sectionContent = []
-          currentSection = 'notices'
-          continue
-        }
-
-        if (currentSection && trimmedLine) {
-          sectionContent.push(trimmedLine)
-        }
-      }
-
-      if (currentSection === 'notices' && sectionContent.length > 0) {
-        sections.notices = sectionContent.join('\n')
-      }
-
-      Object.keys(sections).forEach(key => {
-        if (!sections[key]) {
-          sections[key] = '暂无相关信息'
-        }
-      })
-
-      return sections
-
-    } catch (error) {
-      console.error('解析结果时出错:', error)
-      return {
-        usage: '解析失败，请重试',
-        notices: '解析失败，请重试'
-      }
-    }
   },
 
   // 返回首页
