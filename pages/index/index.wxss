@@ -819,7 +819,7 @@ page {
   left: 30rpx;
   width: 80rpx;
   height: 80rpx;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 183, 0, 0.9);
   border-radius: 40rpx;
   display: flex;
   align-items: center;

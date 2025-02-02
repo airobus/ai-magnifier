@@ -3,11 +3,11 @@
 /* 返回按钮样式 */
 .back-button {
   position: fixed;
-  top: 40rpx;
+  top: 120rpx;
   left: 30rpx;
   width: 80rpx;
   height: 80rpx;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 183, 0, 0.9);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -18,7 +18,7 @@
 
 .back-icon {
   font-size: 40rpx;
-  color: #333;
+  color: #FFFFFF;
 }
 
 /* 结果页面样式 */
@@ -110,9 +110,9 @@
   padding: 30rpx;
   border-radius: 24rpx;
   box-shadow: 0 4rpx 24rpx rgba(0, 0, 0, 0.1);
-  line-height: 1.6;
-  font-size: 28rpx;
-  color: #333;
+  line-height: 1.8;
+  font-size: 40rpx;
+  color: #FFFFFF;
   max-height: calc(67vh - 100rpx);
   overflow-y: auto;
   margin-top: 20rpx;
