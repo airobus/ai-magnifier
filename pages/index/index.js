@@ -1,7 +1,6 @@
 // index.js
 import AIServiceFactory from '../../utils/ai-service/index'
 import config from '../../config/index'
-import ImageHandler from '../../utils/image-handler'
 
 Page({
   data: {

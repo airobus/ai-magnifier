@@ -1,4 +1,3 @@
-import ConfigManager from '../config-manager'
 
 // AI服务提供商的基础类
 class BaseAIProvider {
@@ -6,9 +5,7 @@ class BaseAIProvider {
     throw new Error('需要实现analyzeImage方法')
   }
 
-  async textToSpeech(text) {
-    throw new Error('需要实现textToSpeech方法')
-  }
+
 }
 
 // Cloudflare Workers AI 实现
@@ -106,10 +103,7 @@ class CloudflareAI extends BaseAIProvider {
     })
   }
 
-  async textToSpeech(text) {
-    // 实现文字转语音的逻辑
-    // ...
-  }
+
 }
 
 // Silicon Flow AI 实现
@@ -208,10 +202,7 @@ class SiliconFlowAI extends BaseAIProvider {
     })
   }
 
-  async textToSpeech(text) {
-    // 实现文字转语音的逻辑
-    // ...
-  }
+
 }
 
 // AI服务工厂

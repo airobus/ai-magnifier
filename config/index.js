@@ -1,11 +1,11 @@
 let env = '';
 const envConfig = {};
 
-try {
-  env = wx.getFileSystemManager().readFileSync('.env', 'utf8');
-} catch (error) {
-  console.error('Failed to read .env file:', error);
-}
+// try {
+//   env = wx.getFileSystemManager().readFileSync(`${wx.env.USER_DATA_PATH}/.env`, 'utf8');
+// } catch (error) {
+//   console.error('Failed to read .env file:', error);
+// }
 
 env.split('\n').forEach(line => {
   if (line && !line.startsWith('#')) {
