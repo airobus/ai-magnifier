@@ -1,0 +1,30 @@
+<!--result.wxml-->
+
+<!-- 返回按钮 -->
+<view class="back-button" bindtap="goBack">
+  <text class="back-icon">←</text>
+</view>
+
+<!-- 识别结果展示 -->
+<view class="result-page">
+  <!-- 图片预览 -->
+  <image class="preview-image" src="{{imageUrl}}" mode="widthFix"></image>
+  
+  <!-- AI回答区域 -->
+  <view class="answer-panel {{isAnalyzing || streamResponse ? 'sliding-up' : ''}}">
+    <!-- 充电式进度条 -->
+    <view class="battery-progress" wx:if="{{isAnalyzing}}">
+      <view class="battery-outline">
+        <view class="battery-head"></view>
+        <view class="battery-level"></view>
+      </view>
+    </view>
+    
+    <!-- 结果内容区域，仅在生成完成后显示 -->
+    <block wx:for="{{messageBubbles}}" wx:key="index">
+      <view class="message-bubble {{item ? 'show' : ''}}">
+        <text user-select>{{item}}</text>
+      </view>
+    </block>
+  </view>
+</view>

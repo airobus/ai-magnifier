@@ -47,11 +47,10 @@ Page({
       camera: 'back',
       success: (res) => {
         console.log('拍照成功：', res.tempFiles[0].tempFilePath)
-        this.setData({
-          imageUrl: res.tempFiles[0].tempFilePath,
-          isAnalyzing: true
+        // 跳转到结果页面
+        wx.navigateTo({
+          url: `/pages/result/result?imageUrl=${encodeURIComponent(res.tempFiles[0].tempFilePath)}`
         })
-        this.analyzeImage(res.tempFiles[0].tempFilePath)
       },
       fail: (err) => {
         console.error('拍照失败：', err)
@@ -141,7 +140,6 @@ Page({
     console.log('原始返回文本:', text)
     
     const sections = {
-      basicInfo: '',
       usage: '',
       notices: ''
     }
@@ -159,14 +157,7 @@ Page({
         if (!trimmedLine) continue
 
         // 判断section
-        if (trimmedLine.includes('1. 产品基本信息')) {
-          currentSection = 'basicInfo'
-          continue
-        } else if (trimmedLine.includes('2. 使用方法')) {
-          if (currentSection === 'basicInfo') {
-            sections.basicInfo = sectionContent.join('\n')
-          }
-          sectionContent = []
+        if (trimmedLine.includes('2. 使用方法')) {
           currentSection = 'usage'
           continue
         } else if (trimmedLine.includes('3. 注意事项')) {
@@ -209,7 +200,6 @@ Page({
     } catch (error) {
       console.error('解析结果时出错:', error)
       return {
-        basicInfo: '解析失败，请重试',
         usage: '解析失败，请重试',
         notices: '解析失败，请重试'
       }

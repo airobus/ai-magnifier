@@ -1,19 +1,10 @@
 /**index.wxss**/
 page {
-  --primary-color: #1E293B;     /* 深蓝色作为主色 */
-  --secondary-color: #334155;   /* 次要深蓝色 */
-  --accent-color: #3B82F6;      /* 亮蓝色作为强调色 */
-  --text-color: #F8FAFC;        /* 浅色文字 */
-  --background-color: #0F172A;  /* 深色背景 */
-  --border-radius: 16rpx;
+  --primary-color: #FF6B35;     /* 深橙色作为主色 */
+  --text-color: #333333;        /* 深灰色文字 */
+  --background-color: #FFB700;  /* 深黄色背景 */
   height: 100vh;
-  background-color: var(--background-color); /* 添加背景色 */
-}
-
-.scrollarea {
-  flex: 1;
-  overflow-y: hidden;
-  margin-top: calc(128rpx + env(safe-area-inset-top));
+  background-color: var(--background-color);
 }
 
 .container {
@@ -21,6 +12,8 @@ page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 标题模块 */
@@ -78,6 +71,7 @@ page {
   margin-bottom: 30rpx;
 }
 
+/* 修改眼睛容器样式 */
 .eyes-container {
   height: 60vh;
   display: flex;
@@ -85,6 +79,10 @@ page {
   align-items: center;
   gap: 480rpx;
   padding: 0;
+  background: #FFFFFF;
+  border-radius: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  margin: 20rpx;
 }
 
 .eye {
@@ -93,11 +91,117 @@ page {
   background: var(--secondary-color);
   border-radius: 50%;
   position: relative;
-  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   animation: blink 4s ease-in-out infinite;
+}
+
+/* 按钮样式 */
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mega-button {
+  width: 240rpx;
+  height: 240rpx;
+  background: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 32rpx rgba(255, 165, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.mega-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 16rpx rgba(255, 165, 0, 0.2);
+}
+
+.button-inner {
+  width: 220rpx;
+  height: 220rpx;
+  background: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.button-icon {
+  font-size: 64rpx;
+  margin-bottom: 12rpx;
+  color: var(--primary-color);
+}
+
+.button-text {
+  font-size: 28rpx;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+/* 修改消息气泡样式 */
+.message-bubble {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* 修改分析进度条样式 */
+.battery-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20rpx 30rpx;
+}
+
+.battery-outline {
+  width: 100%;
+  height: 80rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border: 4rpx solid #B87333;
+  border-radius: 40rpx;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10rpx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.battery-level {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: linear-gradient(90deg, #FFB700, #FFD700);
+  border-radius: 40rpx;
+  animation: progress 3s ease-in-out forwards;
+  z-index: 1;
+}
+
+.analyzing-text {
+  font-size: 28rpx;
+  color: #333;
+  text-align: center;
+  z-index: 2;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  pointer-events: none;
 }
 
 .eye:first-child {
@@ -246,81 +350,97 @@ page {
 
 .button-container {
   position: relative;
-  height: 120rpx; /* 与按钮高度一致 */
+  height: 120rpx;
   width: 100%;
 }
 
 .mega-button {
   position: absolute;
   width: 100%;
-  height: 120rpx; /* 减小高度 */
+  height: 120rpx;
   border-radius: 60rpx;
-  background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+  background: #2A2A2A;
+  border: 2rpx solid #B87333;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  box-shadow: 0 8rpx 32rpx rgba(59, 130, 246, 0.3);
+  box-shadow: 0 8rpx 32rpx rgba(184, 115, 51, 0.2);
   overflow: hidden;
 }
 
 .button-inner {
   display: flex;
-  flex-direction: row; /* 改为水平排列 */
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  color: var(--text-color);
+  background: linear-gradient(135deg, #2A2A2A 0%, #3A3A3A 100%);
   z-index: 2;
-  gap: 20rpx; /* 添加间距 */
+  gap: 20rpx;
+  width: 100%;
+  height: 100%;
+  border-radius: 60rpx;
 }
 
 .icon-wrapper {
-  width: 80rpx; /* 减小图标容器尺寸 */
+  width: 80rpx;
   height: 80rpx;
-  background: rgba(255, 255, 255, 0.2);
   border-radius: 40rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0; /* 移除底部间距 */
-}
-
-.button-icon {
-  font-size: 48rpx; /* 稍微减小图标大小 */
+  color: #B87333;
 }
 
 .button-text {
   font-size: 36rpx;
   font-weight: 600;
-  margin-bottom: 0; /* 移除底部间距 */
-}
-
-.button-hint {
-  font-size: 24rpx;
-  opacity: 0.8;
+  color: #B87333;
+  letter-spacing: 2rpx;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
 }
 
 .button-glow {
   position: absolute;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(184, 115, 51, 0.15) 0%, transparent 70%);
   animation: rotate 8s linear infinite;
   z-index: 1;
 }
 
-/* 按钮动画 */
 @keyframes rotate {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-.mega-button.active {
+.mega-button:active {
   transform: scale(0.98);
-  box-shadow: 0 4rpx 16rpx rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4rpx 16rpx rgba(255, 68, 68, 0.2);
 }
 
-/* 动画 */
+/* 添加眼睛动画 */
+@keyframes blink {
+  0%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(1); }
+  97.5% { transform: scaleY(0.1); }
+}
+
+@keyframes look-around {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(10rpx, -10rpx); }
+  50% { transform: translate(-10rpx, 10rpx); }
+  75% { transform: translate(-10rpx, -10rpx); }
+}
+
+/* 添加充电动画 */
+@keyframes charging {
+  0% { width: 0; }
+  50% { width: 100%; }
+  100% { width: 0; }
+}
+
+/* 按钮动画 */
 @keyframes fadeInDown {
   from {
     opacity: 0;
@@ -501,71 +621,85 @@ page {
   transform: translateY(0);
 }
 
-/* 充电式进度条 */
+/* 进度条区域 */
 .battery-progress {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20rpx 0;
+  margin: 20rpx 30rpx;
 }
 
 .battery-outline {
-  width: 200rpx;
+  width: 100%;
   height: 80rpx;
-  border: 6rpx solid var(--text-color);
-  border-radius: 15rpx;
-  padding: 4rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border: 4rpx solid #B87333;
+  border-radius: 40rpx;
   position: relative;
-}
-
-.battery-head {
-  position: absolute;
-  right: -16rpx;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 16rpx;
-  height: 30rpx;
-  background: var(--text-color);
-  border-radius: 0 4rpx 4rpx 0;
+  overflow: hidden;
+  backdrop-filter: blur(10rpx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .battery-level {
-  height: 100%;
-  background: var(--accent-color);
-  border-radius: 6rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
   width: 0;
-  animation: charging 3s ease-in-out forwards; /* 修改为只执行一次 */
+  background: linear-gradient(90deg, #FFB700, #FFD700);
+  border-radius: 40rpx;
+  animation: progress 3s ease-in-out forwards;
+  z-index: 1;
 }
 
-.analyzing-text {
-  color: var(--text-color);
-  font-size: 28rpx;
-  margin-top: 20rpx;
-  opacity: 0.8;
-}
 
-/* 修改充电动画 */
-@keyframes charging {
-  0% {
-    width: 0%;
-  }
-  100% {
-    width: 100%;
-  }
-}
 
-/* 消息气泡样式调整 */
 .message-bubble {
-  max-height: calc(67vh - 180rpx); /* 减去padding和其他元素的高度 */
+  max-height: calc(67vh - 180rpx);
   overflow-y: auto;
-  background: var(--primary-color);
-  padding: 24rpx;
-  border-radius: 20rpx;
-  font-size: 28rpx;
+  background: #E6D5C3;
+  padding: 30rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 24rpx rgba(0, 0, 0, 0.1);
   line-height: 1.6;
-  color: var(--text-color);
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.2);
+  font-size: 28rpx;
+  color: #333;
   margin-top: 20rpx;
+  display: none;
+}
+
+.message-bubble.show {
+  display: block;
+}
+
+/* 区块样式 */
+.section {
+  margin-bottom: 24rpx;
+  padding: 20rpx;
+  background: rgba(230, 213, 195, 0.5);
+  border-radius: 16rpx;
+  backdrop-filter: blur(5rpx);
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12rpx;
+  display: flex;
+  align-items: center;
+}
+
+.section-title::before {
+  content: "";
+  width: 8rpx;
+  height: 24rpx;
+  background: #4CAF50;
+  border-radius: 4rpx;
+  margin-right: 12rpx;
 }
 
 /* 打字动画指示器 */

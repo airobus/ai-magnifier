@@ -22,7 +22,7 @@
         <view class="analyzing-text">正在分析中...</view>
       </view>
       
-      <view class="message-bubble">
+      <view class="message-bubble {{streamResponse ? 'show' : ''}}">
         <text user-select>{{streamResponse}}</text>
       </view>
     </view>
@@ -31,18 +31,8 @@
 
 <!-- 首页内容 -->
 <block wx:else>
-  <scroll-view class="scrollarea" scroll-y type="list">
-    <view class="container">
-      <view class="eyes-container">
-        <view class="eye">
-          <view class="pupil"></view>
-        </view>
-        <view class="eye">
-          <view class="pupil"></view>
-        </view>
-      </view>
-    </view>
-  </scroll-view>
+  <view class="container">
+  </view>
 </block>
 
 <!-- 底部按钮 - 始终显示 -->

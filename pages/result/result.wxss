@@ -1,0 +1,130 @@
+/* result.wxss */
+
+/* 返回按钮样式 */
+.back-button {
+  position: fixed;
+  top: 40rpx;
+  left: 30rpx;
+  width: 80rpx;
+  height: 80rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.back-icon {
+  font-size: 40rpx;
+  color: #333;
+}
+
+/* 结果页面样式 */
+.result-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+/* 图片预览 */
+.preview-image {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: var(--background-color);
+}
+
+/* AI回答面板 */
+.answer-panel {
+  position: fixed;
+  top: 33vh;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(187 186 183 / 82%);
+  padding: 30rpx;
+  border-radius: 60rpx 60rpx 0 0;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-out;
+  box-shadow: 0 -4rpx 24rpx rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+/* 面板滑入动画 */
+.answer-panel.sliding-up {
+  transform: translateY(0);
+}
+
+/* 进度条区域 */
+.battery-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20rpx 30rpx;
+}
+
+.battery-outline {
+  width: 100%;
+  height: 80rpx;
+  background: #E6D5C3;
+  border: 4rpx solid #B87333;
+  border-radius: 20rpx;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10rpx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.battery-level {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: linear-gradient(90deg, #FFB700, #FFD700);
+  border-radius: 20rpx;
+  animation: progress 3s ease-in-out forwards;
+  z-index: 2;
+}
+
+
+
+/* 消息气泡 */
+.message-bubble {
+  background: rgba(255, 183, 0, 0.85);
+  padding: 30rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 24rpx rgba(0, 0, 0, 0.1);
+  line-height: 1.6;
+  font-size: 28rpx;
+  color: #333;
+  max-height: calc(67vh - 100rpx);
+  overflow-y: auto;
+  margin-top: 20rpx;
+  display: none;
+  backdrop-filter: blur(5rpx);
+}
+
+.message-bubble.show {
+  display: block;
+}
+
+
+
+/* 进度条动画 */
+@keyframes progress {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
