@@ -15,7 +15,10 @@ class ImageHandler {
           if (err.errMsg.indexOf('auth deny') !== -1) {
             this.handleAuthDeny('camera')
           }
-          reject(err)
+          // 如果是用户取消操作，则不触发reject
+          if (err.errMsg.indexOf('cancel') === -1) {
+            reject(err)
+          }
         }
       })
     })
@@ -35,7 +38,10 @@ class ImageHandler {
           if (err.errMsg.indexOf('auth deny') !== -1) {
             this.handleAuthDeny('album')
           }
-          reject(err)
+          // 如果是用户取消操作，则不触发reject
+          if (err.errMsg.indexOf('cancel') === -1) {
+            reject(err)
+          }
         }
       })
     })
@@ -68,4 +74,4 @@ class ImageHandler {
   }
 }
 
-export default ImageHandler 
+export default ImageHandler

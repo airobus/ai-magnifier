@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "AI分析结果",
   "navigationStyle": "custom",
-  "usingComponents": {}
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  }
 }

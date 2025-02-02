@@ -1,5 +1,6 @@
 {
-  "usingComponents": {},
-  "navigationStyle": "custom",
-  "componentFramework": "glass-easel"
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  },
+  "navigationStyle": "custom"
 }

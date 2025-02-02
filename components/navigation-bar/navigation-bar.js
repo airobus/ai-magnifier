@@ -59,19 +59,23 @@ Component({
   },
   lifetimes: {
     attached() {
-      const rect = wx.getMenuButtonBoundingClientRect()
-      wx.getSystemInfo({
-        success: (res) => {
-          const isAndroid = res.platform === 'android'
-          const isDevtools = res.platform === 'devtools'
-          this.setData({
-            ios: !isAndroid,
-            innerPaddingRight: `padding-right: ${res.windowWidth - rect.left}px`,
-            leftWidth: `width: ${res.windowWidth - rect.left }px`,
-            safeAreaTop: isDevtools || isAndroid ? `height: calc(var(--height) + ${res.safeArea.top}px); padding-top: ${res.safeArea.top}px` : ``
-          })
-        }
-      })
+      try {
+        const rect = wx.getMenuButtonBoundingClientRect()
+        const systemInfo = wx.getSystemInfoSync()
+        const isAndroid = systemInfo.platform === 'android'
+        const isDevtools = systemInfo.platform === 'devtools'
+        this.setData({
+          ios: !isAndroid,
+          innerPaddingRight: `padding-right: ${systemInfo.windowWidth - rect.left}px`,
+          leftWidth: `width: ${systemInfo.windowWidth - rect.left}px`,
+          safeAreaTop: isDevtools || isAndroid ? `height: calc(var(--height) + ${systemInfo.safeArea.top}px); padding-top: ${systemInfo.safeArea.top}px` : ``
+        })
+      } catch (error) {
+        console.error('导航栏组件初始化失败:', error)
+      }
+    },
+    ready() {
+      // 组件准备就绪
     },
   },
   /**

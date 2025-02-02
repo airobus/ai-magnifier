@@ -1,5 +1,11 @@
-const env = wx.getFileSystemManager().readFileSync('.env', 'utf8');
+let env = '';
 const envConfig = {};
+
+try {
+  env = wx.getFileSystemManager().readFileSync('.env', 'utf8');
+} catch (error) {
+  console.error('Failed to read .env file:', error);
+}
 
 env.split('\n').forEach(line => {
   if (line && !line.startsWith('#')) {
@@ -21,8 +27,8 @@ export default {
     },
     // Silicon Flow配置
     siliconflow: {
-      apiToken: envConfig.SILICONFLOW_API_TOKEN,
-      model: envConfig.SILICONFLOW_MODEL
+      apiToken: 'sk-',
+      model: 'Qwen/QVQ-72B-Preview'
     },
     // AI提示语配置
     prompts: {
