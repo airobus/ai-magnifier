@@ -1,16 +1,28 @@
+const env = wx.getFileSystemManager().readFileSync('.env', 'utf8');
+const envConfig = {};
+
+env.split('\n').forEach(line => {
+  if (line && !line.startsWith('#')) {
+    const [key, value] = line.split('=');
+    if (key && value) {
+      envConfig[key.trim()] = value.trim();
+    }
+  }
+});
+
 export default {
   ai: {
     // 当前使用的AI服务提供商
     provider: 'siliconflow',
     // Cloudflare配置
     cloudflare: {
-      accountId: '8483c3ec7a0cbc54a8d660b5b9002b04',
-      apiToken: 'oa5hvFw9FypFYxIIaP7Z1Z7aE8NipHBeNmb7Zw3u'
+      accountId: envConfig.CLOUDFLARE_ACCOUNT_ID,
+      apiToken: envConfig.CLOUDFLARE_API_TOKEN
     },
     // Silicon Flow配置
     siliconflow: {
-      apiToken: 'sk-jfosjzkmesubhsloiffqmuktgpdokxlblbrnezqldehjqtyh',
-      model: 'Qwen/QVQ-72B-Preview'
+      apiToken: envConfig.SILICONFLOW_API_TOKEN,
+      model: envConfig.SILICONFLOW_MODEL
     },
     // AI提示语配置
     prompts: {

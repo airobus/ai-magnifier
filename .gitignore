@@ -1,2 +1,3 @@
 # 忽略真实配置文件
 config/index.js 
+.env

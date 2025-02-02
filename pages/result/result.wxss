@@ -58,6 +58,8 @@
   transition: transform 0.3s ease-out;
   box-shadow: 0 -4rpx 24rpx rgba(0, 0, 0, 0.2);
   z-index: 2;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* 面板滑入动画 */
@@ -70,7 +72,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20rpx 30rpx;
+  margin: 20rpx 0;
+  width: 100%;
 }
 
 .battery-outline {
