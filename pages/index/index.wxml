@@ -32,6 +32,17 @@
 <!-- 首页内容 -->
 <block wx:else>
   <view class="container">
+    <!-- 放大镜动画容器 -->
+    <view class="magnifier-container">
+      <view class="magnifier-title"># 智能图片识别</view>
+      <view class="magnifier-glass {{isSpinning ? 'spinning' : ''}}" bindtap="handleMagnifierTap">
+        <view class="magnifier-inner-text">
+          点击放大镜
+          开启智能识别
+          探索图像奥秘
+        </view>
+      </view>
+    </view>
   </view>
 </block>
 

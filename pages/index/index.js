@@ -18,7 +18,9 @@ Page({
     },
     activeButton: 'camera', // 默认显示拍照按钮
     touchStartX: 0,
-    touchStartY: 0
+    touchStartY: 0,
+    magnifierRotation: 0,
+    isSpinning: false
   },
 
   onLoad() {
@@ -35,6 +37,8 @@ Page({
         prompts: config.ai.prompts
       }
     )
+
+    this.startMagnifierAnimation()
   },
 
   // 拍照方法
@@ -284,5 +288,78 @@ Page({
       streamResponse: '',
       isAnalyzing: false
     })
+  },
+
+  startMagnifierAnimation() {
+    const animation = wx.createAnimation({
+      duration: 5000,  // 变慢动画速度
+      timingFunction: 'ease-in-out'
+    })
+
+    // 缓慢的呼吸式动画
+    const slowAnimation = () => {
+      animation
+        .translateY(10)  // 轻微上下移动
+        .step()
+      
+      this.setData({
+        magnifierAnimation: animation.export()
+      })
+
+      setTimeout(() => {
+        animation
+          .translateY(-10)
+          .step()
+        
+        this.setData({
+          magnifierAnimation: animation.export()
+        })
+      }, 2500)
+    }
+
+    // 快速的交互式动画
+    this.quickMagnifierAnimation = () => {
+      animation
+        .rotate(360)
+        .scale(1.1)
+        .step({duration: 500})
+      
+      this.setData({
+        magnifierAnimation: animation.export()
+      })
+
+      setTimeout(() => {
+        animation
+          .rotate(0)
+          .scale(1)
+          .step({duration: 300})
+        
+        this.setData({
+          magnifierAnimation: animation.export()
+        })
+      }, 500)
+    }
+
+    // 持续缓慢动画
+    setInterval(slowAnimation, 5000)
+  },
+
+  // 添加触摸交互方法
+  onTouchStart() {
+    // 触发快速动画
+    this.quickMagnifierAnimation()
+  },
+
+  handleMagnifierTap() {
+    this.setData({
+      isSpinning: true
+    });
+
+    // 2秒后恢复原状
+    setTimeout(() => {
+      this.setData({
+        isSpinning: false
+      });
+    }, 2000);
   }
 })

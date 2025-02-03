@@ -27,7 +27,7 @@ export default {
     },
     // Silicon Flow配置
     siliconflow: {
-      apiToken: 'sk-jfosjzkmesubhsloiffqmuktgpdokxlblbrnezqldehjqtyh',
+      apiToken: 'sk-',
       model: 'Qwen/QVQ-72B-Preview'
     },
     // AI提示语配置

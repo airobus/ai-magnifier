@@ -660,8 +660,6 @@ page {
   z-index: 1;
 }
 
-
-
 .message-bubble {
   max-height: calc(67vh - 180rpx);
   overflow-y: auto;
@@ -833,4 +831,301 @@ page {
   color: white;
   font-size: 48rpx;
   font-weight: bold;
+}
+
+/* 放大镜动画容器 */
+.magnifier-container {
+  position: fixed;
+  top: 25vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500rpx;
+  height: 500rpx;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 1000rpx;
+  animation: floatAnimation 6s ease-in-out infinite;
+  --glass-primary: #FFB700;    /* 主色调：金黄色 */
+  --glass-secondary: #B87333;  /* 次要色：古铜色 */
+  --glass-accent: #2A2A2A;     /* 强调色：深灰色 */
+}
+
+/* 放大镜主体 */
+.magnifier-glass {
+  position: relative;
+  width: 400rpx;
+  height: 400rpx;
+  border: 16rpx solid var(--glass-secondary);
+  border-radius: 50%;
+  background: rgba(184, 115, 51, 0.05);
+  box-shadow: 
+    0 0 40rpx rgba(184, 115, 51, 0.4),
+    inset 0 0 30rpx rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: glassGlow 3s ease-in-out infinite alternate;
+  transform-style: preserve-3d;
+  backdrop-filter: blur(5rpx);
+}
+
+/* 放大镜镜面光效 */
+.magnifier-glass::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at center, 
+    rgba(255, 183, 0, 0.3) 0%, 
+    transparent 70%
+  );
+  transform: rotate(45deg);
+  opacity: 0.8;
+  animation: shimmerRotate 8s linear infinite;
+}
+
+/* 放大镜内部文字 */
+.magnifier-inner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  transform: translate(-50%, -50%) scale(0.6);
+  text-align: center;
+  color: var(--glass-secondary);
+  font-size: 28rpx;
+  font-weight: bold;
+  opacity: 0.4;
+  width: 80%;
+  line-height: 1.8;
+  text-shadow: 1rpx 1rpx 4rpx rgba(184, 115, 51, 0.3);
+  z-index: 10;
+  animation: textPulse 4s ease-in-out infinite;
+}
+
+/* 标题样式 */
+.magnifier-title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: var(--glass-secondary);
+  text-shadow: 2rpx 2rpx 8rpx rgba(184, 115, 51, 0.3);
+  margin-bottom: 30rpx;
+  text-align: center;
+  letter-spacing: 4rpx;
+  animation: titleFloat 3s ease-in-out infinite;
+}
+
+/* 动画定义 */
+@keyframes floatAnimation {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-20rpx); }
+}
+
+@keyframes glassGlow {
+  0%, 100% { 
+    box-shadow: 
+      0 0 40rpx rgba(184, 115, 51, 0.4),
+      inset 0 0 30rpx rgba(255, 255, 255, 0.3);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 
+      0 0 80rpx rgba(255, 183, 0, 0.6),
+      inset 0 0 50rpx rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shimmerRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes textPulse {
+  0%, 100% { 
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0.4;
+  }
+  25% { 
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.6;
+  }
+  75% { 
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 1;
+  }
+}
+
+@keyframes titleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10rpx); }
+}
+
+/* 点击动画 */
+.magnifier-glass.spinning {
+  animation: spinAndGlow 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes spinAndGlow {
+  0% { 
+    transform: rotate(0deg) scale(1);
+    box-shadow: 0 0 40rpx rgba(184, 115, 51, 0.4);
+  }
+  50% { 
+    transform: rotate(720deg) scale(1.15);
+    box-shadow: 0 0 100rpx rgba(255, 183, 0, 0.8);
+  }
+  100% { 
+    transform: rotate(1080deg) scale(1);
+    box-shadow: 0 0 40rpx rgba(184, 115, 51, 0.4);
+  }
+}
+
+.dynamic-text {
+  position: absolute;
+  bottom: 30vh;
+  text-align: center;
+  width: 100%;
+  color: var(--text-color);
+}
+
+.typing-text {
+  font-size: 48rpx;
+  font-weight: bold;
+  opacity: 0;
+  animation: fadeInUp 1s forwards;
+}
+
+.typing-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 10rpx;
+  margin-top: 20rpx;
+}
+
+/* 动画定义 */
+@keyframes magnify-move {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-5deg) scale(1.02); }
+  75% { transform: rotate(5deg) scale(1.02); }
+}
+
+@keyframes lens-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes handle-sway {
+  0%, 100% { transform: translateX(-50%) rotate(-15deg); }
+  50% { transform: translateX(-50%) rotate(15deg); }
+}
+
+/* 放大镜点击旋转动画 */
+.magnifier-glass.spinning {
+  animation: 
+    spin 2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards,
+    glassGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(720deg) scale(1.1); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* 放大镜内部文字 */
+.magnifier-inner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  transform: translate(-50%, -50%) scale(0.5);
+  text-align: center;
+  color: #FF6B35;
+  font-size: 24rpx;
+  font-weight: bold;
+  opacity: 0.3;
+  width: 80%;
+  line-height: 1.6;
+  text-shadow: 1rpx 1rpx 4rpx rgba(255, 107, 53, 0.2);
+  z-index: 10;
+  animation: 
+    dynamicTextScale 3s ease-in-out infinite,
+    textShimmer 5s infinite alternate;
+}
+
+@keyframes dynamicTextScale {
+  0%, 100% { 
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 0.4;
+  }
+  25% { 
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.6;
+  }
+  75% { 
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes textShimmer {
+  0%, 100% { 
+    text-shadow: 1rpx 1rpx 4rpx rgba(184, 115, 51, 0.3);
+    color: var(--glass-secondary);
+  }
+  50% { 
+    text-shadow: 2rpx 2rpx 8rpx rgba(255, 183, 0, 0.5);
+    color: #FFB700;
+  }
+}
+
+.magnifier-glass:hover .magnifier-inner-text,
+.magnifier-glass.active .magnifier-inner-text {
+  transform: translate(-50%, -50%) scale(1.2);  /* 放大效果 */
+  font-size: 32rpx;  /* 字体变大 */
+  opacity: 1;  /* 完全不透明 */
+  text-shadow: 2rpx 2rpx 8rpx rgba(255, 107, 53, 0.5);  /* 更强的阴影 */
+}
+
+/* 放大效果的微妙动画 */
+@keyframes magnifyText {
+  0%, 100% { 
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.5;
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.3);
+    opacity: 1;
+  }
+}
+
+.magnifier-glass.spinning .magnifier-inner-text {
+  animation: 
+    magnifyText 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite alternate;
 }
